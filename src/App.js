@@ -1,5 +1,6 @@
 // src/App.js
 import React, { useState, useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { api } from './services';
 import {
@@ -9,10 +10,11 @@ import {
     SkillsSection,
     ExperienceSection,
     ProjectsSection,
+    ProjectDetailsSection,
     Footer
 } from './components';
 
-const Portfolio = () => {
+const MainPortfolio = () => {
     const [portfolioData, setPortfolioData] = useState(null);
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -113,6 +115,31 @@ const Portfolio = () => {
             
             <Footer nome={nome} />
         </div>
+    );
+};
+
+const Portfolio = () => {
+    // Lógica do Dark Mode para passar para as páginas
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const storedMode = localStorage.getItem('darkMode');
+        if (storedMode !== null) {
+            return JSON.parse(storedMode);
+        }
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
+    // Aplica a classe 'dark-mode' ao body
+    useEffect(() => {
+        document.body.className = isDarkMode ? 'dark-mode' : '';
+    }, [isDarkMode]);
+
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<MainPortfolio />} />
+                <Route path="/project/:id" element={<ProjectDetailsSection isDarkMode={isDarkMode} />} />
+            </Routes>
+        </Router>
     );
 };
 

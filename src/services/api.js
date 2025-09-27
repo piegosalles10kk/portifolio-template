@@ -14,6 +14,17 @@ export const api = {
         const response = await fetch(`${API_URL}/projects`);
         if (!response.ok) throw new Error('Erro ao buscar projetos. Verifique o servidor JSON.');
         return response.json();
+    },
+    
+    getProjectById: async (id) => {
+        const response = await fetch(`${API_URL}/project/${id}`);
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Projeto não encontrado.');
+            }
+            throw new Error('Erro ao buscar detalhes do projeto. Verifique o servidor.');
+        }
+        return response.json();
     }
 };
 

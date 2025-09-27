@@ -11,9 +11,12 @@
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.6",
     "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.0.2",
     "react-scripts": "5.0.1",
+    "react-syntax-highlighter": "^15.6.6",
     "recharts": "^2.15.2",
+    "remark-gfm": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
