@@ -1,0 +1,459 @@
+/* ------------------------------------------------------------------- */
+/* 1. VARIÁVEIS DE CORES E FONTES (Terminal Theme) */
+/* ------------------------------------------------------------------- */
+:root {
+    /* Cores Principais do Terminal */
+    --bg-color: #000000; /* Preto sólido */
+    --bg-color-dark: #1e1e1e; /* Um tom um pouco mais claro para contraste */
+    --text-color: #00FF00; /* Verde néon clássico */
+    --text-color-light: #00FF00; /* Mantém o mesmo para consistência */
+    --accent-color: #00aaff; /* Azul claro para comandos e destaque */
+    --border-color: #333333;
+
+    /* Cores de Status (Mantendo a lógica do App.js) */
+    --success-color: #00FF00; /* Verde (8-10) */
+    --warning-color: #FFFF00; /* Amarelo (5-7) */
+    --danger-color: #FF0000; /* Vermelho (1-4) */
+    --text-muted: #888888; /* Cinza para textos secundários */
+
+    /* Cores do Gráfico */
+    --backend-color: var(--accent-color);
+    --frontend-color: var(--warning-color);
+    --db-color: var(--success-color);
+    --deploy-color: var(--danger-color);
+}
+
+/* Aplica a fonte do terminal */
+body, pre, .terminal-font {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 16px;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.4;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+button {
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------------------- */
+/* 2. LAYOUT DO CONSOLE */
+/* ------------------------------------------------------------------- */
+
+.portfolio-terminal-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+.portfolio-terminal-container {
+    flex-grow: 1;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid var(--text-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Efeito de brilho do monitor */
+    background-color: var(--bg-color-dark);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Área de Conteúdo principal do terminal */
+.terminal-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    /* Linhas pontilhadas do terminal */
+    background-image: linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+    background-size: 100% 20px;
+    color: var(--text-color) !important; /* Garante que o texto seja verde */
+}
+
+/* Cores Utilitárias */
+.accent-color { color: var(--accent-color); }
+.success-color { color: var(--success-color); }
+.warning-color { color: var(--warning-color); }
+.danger-color { color: var(--danger-color); }
+.text-muted { color: var(--text-muted); }
+
+
+/* Cursor piscando */
+.blinking-cursor {
+    animation: blink 1s step-end infinite;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: var(--text-color);
+    }
+}
+
+/* ------------------------------------------------------------------- */
+/* 3. NAVEGAÇÃO E PROMPT */
+/* ------------------------------------------------------------------- */
+
+.console-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--text-color);
+    background-color: var(--bg-color);
+    padding: 5px 0 0 5px;
+}
+
+.console-tab {
+    padding: 10px 15px;
+    border: 1px solid var(--text-color);
+    border-bottom: none;
+    background-color: var(--bg-color-dark);
+    margin-right: 5px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.console-tab:hover {
+    opacity: 1;
+    background-color: #1a1a1a;
+}
+
+.console-tab.active {
+    opacity: 1;
+    background-color: var(--bg-color-dark);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    border-bottom: 2px solid var(--bg-color-dark); /* Esconde a linha inferior */
+}
+
+/* Linha de comando */
+.console-line {
+    margin-bottom: 15px;
+}
+
+.prompt-prefix {
+    color: var(--success-color);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.prompt-command {
+    color: var(--text-color);
+}
+
+.prompt-output {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.console-section {
+    min-height: 400px; /* Garante que a seção tenha altura mínima */
+}
+
+.section-title-terminal {
+    color: var(--accent-color);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 5px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 4. HERO SECTION */
+/* ------------------------------------------------------------------- */
+
+.large-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap; /* Mantém a formatação da tag <pre> */
+}
+
+.console-link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 5px;
+    color: var(--accent-color);
+    text-decoration: underline;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.console-link-button:hover {
+    color: var(--success-color);
+}
+
+/* ------------------------------------------------------------------- */
+/* 5. ABOUT SECTION */
+/* ------------------------------------------------------------------- */
+
+.bio-paragraph-terminal {
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 2px solid var(--text-muted);
+}
+
+.social-links-terminal {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.pipe-separator {
+    color: var(--text-muted);
+    margin: 0 10px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 6. SKILLS SECTION (Skill Progress Orb) */
+/* ------------------------------------------------------------------- */
+
+.skills-grid-terminal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.skill-category-terminal {
+    background-color: var(--bg-color);
+    padding: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.category-title-terminal {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.skill-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skill-item-terminal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-status-indicator {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.skill-name-terminal {
+    flex-grow: 1;
+}
+
+.skill-level-terminal {
+    font-size: 0.9rem;
+    white-space: pre; /* Mantém espaços na barra de progresso */
+}
+
+/* Gráfico */
+.chart-container-terminal {
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+}
+
+.chart-title-small-terminal {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+/* Ajuste cores recharts para o tema terminal */
+.recharts-wrapper .recharts-text, 
+.recharts-wrapper .recharts-tooltip-label,
+.recharts-wrapper .recharts-legend-item-text {
+    fill: var(--text-color); /* Garante que o texto do gráfico seja verde */
+}
+.recharts-wrapper .recharts-cartesian-axis-line {
+    stroke: var(--text-color);
+}
+
+
+/* ------------------------------------------------------------------- */
+/* 7. EXPERIENCE SECTION */
+/* ------------------------------------------------------------------- */
+
+.experience-timeline-terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-left: 10px;
+}
+
+.job-item-terminal {
+    border-left: 2px solid var(--text-muted);
+    padding-left: 20px;
+}
+
+.job-header {
+    margin-bottom: 5px;
+}
+
+.job-title-terminal {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.job-company-terminal {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.job-description-terminal {
+    margin-bottom: 10px;
+}
+
+.tech-stack-terminal {
+    font-size: 0.9rem;
+}
+
+.tech-tag-terminal {
+    display: inline-block;
+    color: var(--success-color);
+    background-color: #333333;
+    padding: 2px 5px;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 8. PROJECTS SECTION */
+/* ------------------------------------------------------------------- */
+
+.projects-list-terminal {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.project-item-terminal {
+    padding: 15px;
+    border: 1px dashed var(--border-color);
+}
+
+.project-name-terminal {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.project-summary-terminal,
+.project-tech-terminal {
+    margin-bottom: 5px;
+}
+
+.project-links-terminal {
+    margin-top: 10px;
+}
+
+.link-terminal {
+    display: inline-block;
+    padding: 5px 0;
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------------------- */
+/* 9. CONTACT SECTION */
+/* ------------------------------------------------------------------- */
+
+.contact-line {
+    margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 10. FOOTER E TELAS DE STATUS */
+/* ------------------------------------------------------------------- */
+
+.terminal-footer {
+    padding: 10px 20px;
+    border-top: 2px solid var(--text-color);
+    background-color: var(--bg-color);
+    margin-top: auto; /* Empurra para o final */
+}
+
+.loading-screen, .error-screen, .no-data-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: var(--bg-color);
+}
+
+
+/* ------------------------------------------------------------------- */
+/* 11. RESPONSIVIDADE */
+/* ------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .portfolio-terminal-wrapper {
+        padding: 10px;
+    }
+
+    .portfolio-terminal-container {
+        border-width: 1px;
+    }
+
+    .console-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .console-tab {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .skills-grid-terminal {
+        grid-template-columns: 1fr;
+    }
+    
+    .large-text {
+        font-size: 1rem;
+    }
+
+    .console-link-button {
+        font-size: 1rem;
+    }
+}
